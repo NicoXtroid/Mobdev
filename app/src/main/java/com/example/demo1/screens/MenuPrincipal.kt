@@ -54,7 +54,7 @@ fun TestContent(navController: NavController) {
         Spacer(modifier = Modifier.height(15.dp))
         Button(
             onClick = {
-                //GenerarMensaje(texto = "Boton en Construccion")
+                //GenerarMensaje(texto = "Boton en Construccionj")
             navController.navigate(route = AppScreens.ListadoActivity.route)
             }
         ) {
