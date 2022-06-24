@@ -1,9 +1,7 @@
 package com.example.demo1.screens
 
 import android.graphics.drawable.Drawable
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -53,7 +51,7 @@ fun ListadoBody(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text("Pokedex")
-        GenerarListado()
+        GenerarListado(listadoPoke)
         Button(onClick = {
             navController.popBackStack()
         }) {
@@ -64,9 +62,7 @@ fun ListadoBody(navController: NavController) {
 
 @Composable
 fun GenerarImagen(num: Int) {
-
     when (num) {
-
         1 ->{Image(
             painterResource(R.drawable.pokemon_1),
             "POkemon Imagen",
@@ -99,6 +95,9 @@ fun DeterminarColor(tipoE: String): Color {
         "Fuego" -> {
             colorTipo = Color.Red
         }
+        "Agua" -> {
+            colorTipo = Color.Cyan
+        }
 
     }
     return colorTipo
@@ -126,24 +125,65 @@ val Charmander = Pokemon(
     null,
     "El Pokemon Lagarto. Una flama arde en la punta de su cola desde su nacimiento. Se dice que el Charmander muere si su flama llega a apagarse."
 )
+val Totodile = Pokemon(
+    158,
+    "Tododile",
+    "Agua",
+    null,
+    "El Pokemon mandíbula. Su Mandíbula sumamente desarrollada es tan poderosa que puede triturar cualquier cosa. Atencion entrenadores: a este pokémon le gusta usar sus dientes."
+
+)
+val listadoPoke : ArrayList<Pokemon> = arrayListOf<Pokemon>(Bulbasaur, Ivysaur, Charmander, Totodile)
+
 
 @Composable
-fun GenerarListado() {
-    GenerarBloque(poke = Bulbasaur)
-    GenerarBloque(poke = Ivysaur)
-    GenerarBloque(poke = Charmander)
-}
+fun GenerarListado(listado : ArrayList<Pokemon>) {
+    val scrollState = rememberScrollState()
+    var sw= 0
+    Column(modifier = Modifier.verticalScroll(scrollState)) {
+        listado.forEach {
+            val numero = it.numero
 
-@Composable
-fun GenerarBloque(poke: Pokemon) {
-    Row(modifier = Modifier.padding(8.dp)) {
-        GenerarImagen(poke.numero)
-        DesglosarData(poke = poke)
+            when (numero){
+
+                in 1..151 -> {
+                    if (sw == 0){
+                        Text("Pokedex Kanto")
+                        sw += 1
+                    }
+                    Row(modifier = Modifier.padding(8.dp)) {
+                        GenerarPokemon(poke = it)
+                    }
+                    sw = 1
+                }
+                152 -> {
+                    Text("Pokedex Johto")
+                }
+                in 152..251 ->{
+
+                    Row(modifier = Modifier.padding(8.dp)) {
+                        GenerarPokemon(poke = it)
+                    }
+
+                }
+
+            }
+        }
     }
 }
 
 @Composable
-fun DesglosarData(poke: Pokemon) {
+fun GenerarPokemon(poke: Pokemon) {
+    val numero = poke.numero
+
+    Row(modifier = Modifier.padding(8.dp)) {
+        GenerarImagen(poke.numero)
+        PokemonEntry(poke = poke)
+    }
+}
+
+@Composable
+fun PokemonEntry(poke: Pokemon) {
     val numero = poke.numero
     var type2 = poke.tipo2
     if (type2 == null) {
@@ -155,9 +195,11 @@ fun DesglosarData(poke: Pokemon) {
 
     Column(
         //modifier = Modifier.background(color = DeterminarColor(poke.tipo1)
-        modifier = Modifier.clickable{
-            expand = !expand
-        }.background(color = DeterminarColor(poke.tipo1))
+        modifier = Modifier
+            .clickable {
+                expand = !expand
+            }
+            .background(color = DeterminarColor(poke.tipo1))
     )
     {
         GenerarTexto(

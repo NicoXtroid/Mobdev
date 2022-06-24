@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Demo1</string>
+    <string name="boton_dex_nacional">"Pokedex /n Nacional" </string>
 </resources>
