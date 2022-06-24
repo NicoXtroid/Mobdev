@@ -154,7 +154,7 @@ fun GenerarListado(listado : ArrayList<Pokemon>) {
                     Row(modifier = Modifier.padding(8.dp)) {
                         GenerarPokemon(poke = it)
                     }
-                    //sw = 1
+                    sw = 1
                 }
                 152 -> {
                     Text("Pokedex Johto")
