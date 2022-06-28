@@ -73,6 +73,21 @@ fun GenerarImagen(num: Int) {
             "POkemon Imagen",
             modifier = Modifier.size(64.dp)
         ) }
+        4 ->{Image(
+            painterResource(R.drawable.pokemon_4),
+            "POkemon Imagen",
+            modifier = Modifier.size(64.dp)
+        ) }
+        152 ->{Image(
+            painterResource(R.drawable.pokemon_152),
+            "POkemon Imagen",
+            modifier = Modifier.size(64.dp)
+        ) }
+        158 ->{Image(
+            painterResource(R.drawable.pokemon_158),
+            "POkemon Imagen",
+            modifier = Modifier.size(64.dp)
+        ) }
         else -> {Image(
             painterResource(R.drawable.ic_launcher_foreground),
             "POkemon Imagen",
@@ -125,6 +140,13 @@ val Charmander = Pokemon(
     null,
     "El Pokemon Lagarto. Una flama arde en la punta de su cola desde su nacimiento. Se dice que el Charmander muere si su flama llega a apagarse."
 )
+val Chikorita = Pokemon(
+    152,
+    "Chikorita",
+    "Planta",
+    null,
+    "El Pokémon Hoja. Chikorita librea una fragancia dulce y relajante con la hoja de su cabeza. Le gustan los baños de sol"
+)
 val Totodile = Pokemon(
     158,
     "Tododile",
@@ -133,7 +155,7 @@ val Totodile = Pokemon(
     "El Pokemon mandíbula. Su Mandíbula sumamente desarrollada es tan poderosa que puede triturar cualquier cosa. Atencion entrenadores: a este pokémon le gusta usar sus dientes."
 
 )
-val listadoPoke : ArrayList<Pokemon> = arrayListOf<Pokemon>(Bulbasaur, Ivysaur, Charmander, Totodile)
+val listadoPoke : ArrayList<Pokemon> = arrayListOf<Pokemon>(Bulbasaur, Ivysaur, Charmander, Chikorita,Totodile)
 
 
 @Composable
@@ -147,26 +169,22 @@ fun GenerarListado(listado : ArrayList<Pokemon>) {
             when (numero){
 
                 in 1..151 -> {
-                    if (sw == 0){
+                    if (numero == 1){
                         Text("Pokedex Kanto")
-                        sw += 1
                     }
                     Row(modifier = Modifier.padding(8.dp)) {
                         GenerarPokemon(poke = it)
                     }
-                    sw = 1
                 }
-                152 -> {
-                    Text("Pokedex Johto")
-                }
+
                 in 152..251 ->{
-
+                    if (numero == 152){
+                        Text("Pokedex Kanto")
+                    }
                     Row(modifier = Modifier.padding(8.dp)) {
                         GenerarPokemon(poke = it)
                     }
-
                 }
-
             }
         }
     }
